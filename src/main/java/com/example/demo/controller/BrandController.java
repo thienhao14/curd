@@ -16,7 +16,7 @@ import com.example.demo.model.Brand;
 import com.example.demo.service.BrandService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/curd")
 public class BrandController {
 	
 	@Autowired

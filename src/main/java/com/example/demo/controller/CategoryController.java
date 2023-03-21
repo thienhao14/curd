@@ -17,7 +17,7 @@ import com.example.demo.model.Category;
 import com.example.demo.service.CategoryService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/curd")
 public class CategoryController {
 	@Autowired
 	private CategoryService categoryService;
