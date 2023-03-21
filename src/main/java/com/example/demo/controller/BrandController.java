@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +18,14 @@ import com.example.demo.service.BrandService;
 
 @RestController
 @RequestMapping("/curd")
-public class BrandController {
+public class BrandController{
 	
 	@Autowired
 	private BrandService brandService;
 	
 	@PostMapping("/brand")
 	public Brand save(@RequestBody Brand brandObj) {
+		System.out.print("post");
 		brandService.save(brandObj);
 		return brandObj;
 	}

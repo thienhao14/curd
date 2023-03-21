@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import jakarta.persistence.Column;
@@ -13,27 +14,29 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name="brand")
 
-public class Brand {
+public class Brand implements Serializable{
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column
-	private Integer id;
+	private long id;
 	@Column
 	private String name;
 	@Column
 	private String logo;
-	@Column
+	@Column(name ="activeflag")
 	private Integer activeFlag;
-	@Column
+	@Column(name="createdate")
 	private Date createDate;
-	@Column
+	@Column(name="updatedate")
 	private Date updateDate;
 	@Column
 	private Integer status;
-	public Integer getId() {
+	
+	public long getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -54,6 +57,7 @@ public class Brand {
 	public void setActiveFlag(Integer activeFlag) {
 		this.activeFlag = activeFlag;
 	}
+	
 	public Date getCreateDate() {
 		return createDate;
 	}
