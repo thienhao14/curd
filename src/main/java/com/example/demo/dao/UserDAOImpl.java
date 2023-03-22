@@ -1,13 +1,16 @@
 package com.example.demo.dao;
 
+import java.io.File;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.model.Brand;
 import com.example.demo.model.User;
 
 import jakarta.persistence.EntityManager;
@@ -50,12 +53,34 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public boolean checkLogin(User inputUser) {
 		Session currentSession = entityManager.unwrap(Session.class);
-		User user = currentSession.find(User.class, inputUser.getId());
+//		User user = currentSession.find(User.class, inputUser.getId());
+		
+		
 //		find by username + password = hibernate
-		if(user != null) {
-			return true;
-		}
-		return false;
+		
+		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        
+        User userDB = (User)session.get(User.class, inputUser.getId());
+        if(inputUser.getUsername().equals(userDB.getUsername()) && (inputUser.getPassword().equals(userDB.getPassword()))) {
+        	 System.out.println("User Login Successfully !!!");
+             return true;
+        } else {
+        	System.out.println("Incorrect Username or Password !!!");
+        	return false;
+        }
+        	
+		
+		
+		
+//		if(user != null) {
+//			return true;
+//		}
+//		return false;
+		
 	}
+	
+	
 
 }
