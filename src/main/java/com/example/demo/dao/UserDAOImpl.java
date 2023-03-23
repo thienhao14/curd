@@ -1,12 +1,12 @@
 package com.example.demo.dao;
 
-import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.List;
+import java.sql.Date;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -54,7 +54,6 @@ public class UserDAOImpl implements UserDAO {
 	public boolean checkLogin(User inputUser) {
 		Session currentSession = entityManager.unwrap(Session.class);
 
-//		find by username + password = hibernate
 		String sql = "from User c where c.username = :username and c.password = :password";
 		List<User> userDB = currentSession.createQuery(sql, User.class)
 				.setParameter("username", inputUser.getUsername()).setParameter("password", inputUser.getPassword())
@@ -68,7 +67,28 @@ public class UserDAOImpl implements UserDAO {
 			return false;
 		}
 
+	}
 
+	@Override
+	public boolean checkSignup(User inputUser) {
+		Date currentDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+		try {
+			Session currentSession = entityManager.unwrap(Session.class);
+
+			User user = new User();
+			user.setUsername(inputUser.getUsername());
+			user.setPassword(inputUser.getPassword());
+			user.setName(inputUser.getUsername());
+			user.setActiveFlag(1);
+			user.setCreateDate(currentDate);
+			user.setUpdatedate(currentDate);
+			currentSession.saveOrUpdate(user);
+
+		} catch (Exception e) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

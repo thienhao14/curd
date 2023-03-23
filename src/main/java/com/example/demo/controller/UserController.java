@@ -33,6 +33,11 @@ public class UserController {
 		
 	}
 	
+	@PostMapping("/signup")
+	public boolean signup(@RequestBody User userObj) {
+		return userService.checkSignup(userObj);
+	}
+	
 	
 	@GetMapping("")
 	public List<User> get(){
