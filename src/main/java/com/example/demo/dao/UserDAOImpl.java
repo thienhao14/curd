@@ -20,7 +20,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Autowired
 	private EntityManager entityManager;
-	
+
 	@Override
 	public List<User> get() {
 		Session currentSession = entityManager.unwrap(Session.class);
@@ -47,40 +47,28 @@ public class UserDAOImpl implements UserDAO {
 		Session currentSession = entityManager.unwrap(Session.class);
 		User userObj = currentSession.get(User.class, id);
 		currentSession.delete(userObj);
-		
+
 	}
 
 	@Override
 	public boolean checkLogin(User inputUser) {
 		Session currentSession = entityManager.unwrap(Session.class);
-//		User user = currentSession.find(User.class, inputUser.getId());
-		
-		
+
 //		find by username + password = hibernate
-		
-		SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        
-        User userDB = (User)session.get(User.class, inputUser.getId());
-        if(inputUser.getUsername().equals(userDB.getUsername()) && (inputUser.getPassword().equals(userDB.getPassword()))) {
-        	 System.out.println("User Login Successfully !!!");
-             return true;
-        } else {
-        	System.out.println("Incorrect Username or Password !!!");
-        	return false;
-        }
-        	
-		
-		
-		
-//		if(user != null) {
-//			return true;
-//		}
-//		return false;
-		
+		String sql = "from User c where c.username = :username and c.password = :password";
+		List<User> userDB = currentSession.createQuery(sql, User.class)
+				.setParameter("username", inputUser.getUsername()).setParameter("password", inputUser.getPassword())
+				.list();
+
+		if (!userDB.isEmpty()) {
+			System.out.println("User Login Successfully !!!");
+			return true;
+		} else {
+			System.out.println("Incorrect Username or Password !!!");
+			return false;
+		}
+
+
 	}
-	
-	
 
 }

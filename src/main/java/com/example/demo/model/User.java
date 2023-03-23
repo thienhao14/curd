@@ -78,6 +78,12 @@ public class User {
 	public void setUpdatedate(Date updatedate) {
 		this.updatedate = updatedate;
 	}
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", email=" + email + ", name="
+				+ name + ", activeFlag=" + activeFlag + ", createDate=" + createDate + ", updatedate=" + updatedate
+				+ "]";
+	}
 	
 	
 }
