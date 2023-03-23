@@ -12,5 +12,6 @@ public interface UserDAO {
 	void save(User user);
 	void delete(int id);
 	boolean checkLogin(User userObj);
-	boolean checkSignup(User userObj);
+	User signUp(User userObj);
+	boolean checkExists(User userObj);
 }

@@ -46,10 +46,12 @@ public class UserServiceImpl implements UserService {
 		return userDAO.checkLogin(userObj);
 		
 	}
-	
+
 	@Override
-	public boolean checkSignup(User userObj) {
-		return userDAO.checkSignup(userObj);
+	public User signUp(User userObj) {
+		return userDAO.signUp(userObj);
 	}
+	
+	
 
 }

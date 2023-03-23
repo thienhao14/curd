@@ -34,8 +34,8 @@ public class UserController {
 	}
 	
 	@PostMapping("/signup")
-	public boolean signup(@RequestBody User userObj) {
-		return userService.checkSignup(userObj);
+	public User signup(@RequestBody User userObj) {
+		return userService.signUp(userObj);
 	}
 	
 	

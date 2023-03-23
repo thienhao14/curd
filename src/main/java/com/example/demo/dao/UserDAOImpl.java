@@ -70,25 +70,43 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public boolean checkSignup(User inputUser) {
+	public User signUp(User inputUser) {
 		Date currentDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-		try {
-			Session currentSession = entityManager.unwrap(Session.class);
 
-			User user = new User();
-			user.setUsername(inputUser.getUsername());
-			user.setPassword(inputUser.getPassword());
-			user.setName(inputUser.getUsername());
-			user.setActiveFlag(1);
-			user.setCreateDate(currentDate);
-			user.setUpdatedate(currentDate);
+		Session currentSession = entityManager.unwrap(Session.class);
+
+		User user = new User();
+		user.setUsername(inputUser.getUsername());
+		user.setPassword(inputUser.getPassword());
+		user.setName(inputUser.getUsername());
+		user.setActiveFlag(1);
+		user.setCreateDate(currentDate);
+		user.setUpdatedate(currentDate);
+
+		if (!checkExists(user)) {
 			currentSession.saveOrUpdate(user);
+			return user;
+		} else
+			return null;
 
-		} catch (Exception e) {
+	}
+
+	@Override
+	public boolean checkExists(User inputUser) {
+
+		Session currentSession = entityManager.unwrap(Session.class);
+
+		String sql = "from User c where c.username = :username";
+		List<User> userDB = currentSession.createQuery(sql, User.class)
+				.setParameter("username", inputUser.getUsername()).list();
+		if (!userDB.isEmpty()) {
+
+			return true;
+		} else {
+
 			return false;
 		}
 
-		return true;
 	}
 
 }
