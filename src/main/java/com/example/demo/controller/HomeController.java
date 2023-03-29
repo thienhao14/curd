@@ -9,6 +9,6 @@ public class HomeController extends BaseController {
 	
 	@RequestMapping("/client")
 	public String index() {
-         return "person";
+         return "login";
 	}
 }

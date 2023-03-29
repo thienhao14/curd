@@ -17,8 +17,8 @@
 
 
     <context:annotation-config/>
-    <context:component-scan base-package="com.laptrinhjavaweb.dao, com.laptrinhjavaweb.service,
-                                            com.laptrinhjavaweb.controller, com.laptrinhjavaweb.model"/>
+    <context:component-scan base-package="com.example.demo.dao, com.example.demo.service,
+                                           com.example.demo.controller, com.example.demo.model"/>
 
     <bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
